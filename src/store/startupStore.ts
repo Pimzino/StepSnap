@@ -106,10 +106,6 @@ function syncSplashDom(message: string, detail: string | null) {
 }
 
 function hideSplashDom() {
-    if (isMonitorPickerWindow()) {
-        return;
-    }
-
     const { splash } = getSplashElements();
     if (!splash || splash.classList.contains("hidden")) {
         return;

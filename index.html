@@ -5,12 +5,6 @@
     <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StepSnap</title>
-    <script>
-      // Hide splashscreen immediately for monitor-picker window (runs before body renders)
-      if (window.location.hash === '#/monitor-picker' || window.location.hash.startsWith('#/monitor-picker')) {
-        document.write('<style>#splash { display: none !important; }</style>');
-      }
-    </script>
     <style>
       /* Splash-only styles - scoped to not affect React app */
       #splash {
