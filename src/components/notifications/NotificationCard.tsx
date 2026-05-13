@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Check, ChevronDown, ChevronUp } from "lucide-react";
 import { useNotificationStore, type Notification, type NotificationVariant } from "../../store/notificationStore";
+import Tooltip from "../Tooltip";
 
 function getVariantAccentColor(variant: NotificationVariant): string {
     if (variant === "success") return "#22c55e";
@@ -97,29 +98,31 @@ export default function NotificationCard({ notification }: NotificationCardProps
                 {/* Actions */}
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
                     {!notification.is_read && (
+                        <Tooltip content="Mark as read">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    markAsRead(notification.id);
+                                }}
+                                className="p-1 text-white/40 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                                aria-label="Mark as read"
+                            >
+                                <Check size={14} />
+                            </button>
+                        </Tooltip>
+                    )}
+                    <Tooltip content="Delete">
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                markAsRead(notification.id);
+                                deleteNotification(notification.id);
                             }}
-                            className="p-1 text-white/40 hover:text-white hover:bg-white/10 rounded-md transition-colors"
-                            aria-label="Mark as read"
-                            title="Mark as read"
+                            className="p-1 text-white/40 hover:text-red-400 hover:bg-white/10 rounded-md transition-colors"
+                            aria-label="Delete notification"
                         >
-                            <Check size={14} />
+                            <X size={14} />
                         </button>
-                    )}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            deleteNotification(notification.id);
-                        }}
-                        className="p-1 text-white/40 hover:text-red-400 hover:bg-white/10 rounded-md transition-colors"
-                        aria-label="Delete notification"
-                        title="Delete"
-                    >
-                        <X size={14} />
-                    </button>
+                    </Tooltip>
                 </div>
             </div>
         </div>

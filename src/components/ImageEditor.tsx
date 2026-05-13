@@ -7,6 +7,7 @@ import {
     MoveRight, Square, Circle, Type, Pencil, EyeOff, Trash2, Palette, Pointer
 } from 'lucide-react';
 import * as fabric from 'fabric';
+import Tooltip from './Tooltip';
 
 // ============================================================================
 // Types & Interfaces
@@ -235,7 +236,6 @@ function ToolbarButton({ icon, label, active, onClick, disabled }: ToolbarButton
                 }
                 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
             `}
-            title={label}
         >
             {icon}
             <span className="text-[10px] font-medium">{label}</span>
@@ -297,7 +297,6 @@ function ColorPicker({ currentColor, onColorChange }: ColorPickerProps) {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
-                title="Color"
             >
                 <div className="relative">
                     <Palette size={20} />
@@ -321,19 +320,19 @@ function ColorPicker({ currentColor, onColorChange }: ColorPickerProps) {
                     }}
                 >
                     {COLORS.map((color) => (
-                        <button
-                            key={color}
-                            title={`Select color ${color}`}
-                            onMouseDown={(e) => {
-                                e.preventDefault(); // Prevent focus loss
-                                e.stopPropagation();
-                                handleColorSelect(color);
-                            }}
-                            className={`w-7 h-7 rounded-md border-2 transition-transform hover:scale-110 ${currentColor === color ? 'border-white' : 'border-transparent'
-                                }`}
-                            // eslint-disable-next-line react/forbid-dom-props -- Dynamic color value requires inline style
-                            style={{ backgroundColor: color }}
-                        />
+                        <Tooltip key={color} content={`Select color ${color}`}>
+                            <button
+                                onMouseDown={(e) => {
+                                    e.preventDefault(); // Prevent focus loss
+                                    e.stopPropagation();
+                                    handleColorSelect(color);
+                                }}
+                                className={`w-7 h-7 rounded-md border-2 transition-transform hover:scale-110 ${currentColor === color ? 'border-white' : 'border-transparent'
+                                    }`}
+                                // eslint-disable-next-line react/forbid-dom-props -- Dynamic color value requires inline style
+                                style={{ backgroundColor: color }}
+                            />
+                        </Tooltip>
                     ))}
                 </div>,
                 document.body
@@ -1000,13 +999,14 @@ export default function ImageEditor({ imageSrc, onSave, onCancel }: ImageEditorP
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-white/10 bg-[#161316]/90 rounded-t-2xl">
                     <h3 className="text-lg font-semibold text-white">Edit Screenshot</h3>
-                    <button
-                        onClick={onCancel}
-                        title="Close editor"
-                        className="p-1.5 hover:bg-white/10 rounded-lg transition-colors text-white"
-                    >
-                        <X size={20} />
-                    </button>
+                    <Tooltip content="Close editor">
+                        <button
+                            onClick={onCancel}
+                            className="p-1.5 hover:bg-white/10 rounded-lg transition-colors text-white"
+                        >
+                            <X size={20} />
+                        </button>
+                    </Tooltip>
                 </div>
 
                 {/* Toolbar */}

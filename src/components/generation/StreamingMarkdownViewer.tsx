@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { ArrowDown, Loader2, Sparkles } from 'lucide-react';
 import MarkdownViewer from '../MarkdownViewer';
+import Tooltip from '../Tooltip';
 
 interface StreamingMarkdownViewerProps {
     content: string;
@@ -71,13 +72,14 @@ export default function StreamingMarkdownViewer({ content, isGenerating = false,
 
             {/* Scroll-to-bottom button when auto-scroll is disabled */}
             {!autoScroll && (
-                <button
-                    onClick={scrollToBottom}
-                    className="absolute bottom-4 right-4 p-2 bg-[#2721E8] hover:bg-[#4a45f5] rounded-full shadow-lg transition-colors"
-                    title="Scroll to bottom"
-                >
-                    <ArrowDown size={16} className="text-white" />
-                </button>
+                <Tooltip content="Scroll to bottom">
+                    <button
+                        onClick={scrollToBottom}
+                        className="absolute bottom-4 right-4 p-2 bg-[#2721E8] hover:bg-[#4a45f5] rounded-full shadow-lg transition-colors"
+                    >
+                        <ArrowDown size={16} className="text-white" />
+                    </button>
+                </Tooltip>
             )}
         </div>
     );

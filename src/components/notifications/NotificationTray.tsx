@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Check, Trash2, BellOff } from "lucide-react";
 import { useNotificationStore } from "../../store/notificationStore";
 import NotificationCard from "./NotificationCard";
+import Tooltip from "../Tooltip";
 
 export default function NotificationTray() {
     const trayOpen = useNotificationStore((s) => s.trayOpen);
@@ -53,22 +54,24 @@ export default function NotificationTray() {
                     </h2>
                     <div className="flex items-center gap-1">
                         {unreadCount > 0 && (
-                            <button
-                                onClick={markAllAsRead}
-                                className="p-1.5 text-white/50 hover:text-white hover:bg-white/10 rounded-md transition-colors"
-                                title="Mark all as read"
-                            >
-                                <Check size={16} />
-                            </button>
+                            <Tooltip content="Mark all as read">
+                                <button
+                                    onClick={markAllAsRead}
+                                    className="p-1.5 text-white/50 hover:text-white hover:bg-white/10 rounded-md transition-colors"
+                                >
+                                    <Check size={16} />
+                                </button>
+                            </Tooltip>
                         )}
                         {notifications.length > 0 && (
-                            <button
-                                onClick={clearAll}
-                                className="p-1.5 text-white/50 hover:text-red-400 hover:bg-white/10 rounded-md transition-colors"
-                                title="Clear all"
-                            >
-                                <Trash2 size={16} />
-                            </button>
+                            <Tooltip content="Clear all">
+                                <button
+                                    onClick={clearAll}
+                                    className="p-1.5 text-white/50 hover:text-red-400 hover:bg-white/10 rounded-md transition-colors"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </Tooltip>
                         )}
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrate
 import { MapPin, Plus } from "lucide-react";
 
 import DraggableStepCard from "../../components/DraggableStepCard";
+import Tooltip from "../../components/Tooltip";
 import type { Step } from "../../store/recordingsStore";
 
 interface StepsTabProps {
@@ -44,31 +45,34 @@ export default function StepsTab({
 
         if (isActive) {
             return (
-                <button
-                    onClick={() => onSelectInsertPosition(index)}
-                    title="Click again to cancel"
-                    className="group relative flex w-full items-center justify-center py-2 text-green-400 transition-colors"
-                >
-                    <span className="h-px flex-1 bg-green-400" />
-                    <span className="mx-3 inline-flex items-center gap-1.5 rounded-full border border-green-500 bg-green-500/15 px-3 py-1 text-xs font-medium text-green-400">
-                        <MapPin size={12} />
-                        Insert here
-                    </span>
-                    <span className="h-px flex-1 bg-green-400" />
-                </button>
+                <Tooltip content="Click again to cancel">
+                    <button
+                        onClick={() => onSelectInsertPosition(index)}
+                        className="group relative flex w-full items-center justify-center py-2 text-green-400 transition-colors"
+                    >
+                        <span className="h-px flex-1 bg-green-400" />
+                        <span className="mx-3 inline-flex items-center gap-1.5 rounded-full border border-green-500 bg-green-500/15 px-3 py-1 text-xs font-medium text-green-400">
+                            <MapPin size={12} />
+                            Insert here
+                        </span>
+                        <span className="h-px flex-1 bg-green-400" />
+                    </button>
+                </Tooltip>
             );
         }
 
         return (
             <div className="relative flex w-full items-center justify-center py-1">
                 <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/8" />
-                <button
-                    onClick={() => onSelectInsertPosition(index)}
-                    className="relative inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-[#1a1718] px-3 py-1 text-xs font-medium text-white/60 hover:border-[#2721E8]/60 hover:bg-[#2721E8]/10 hover:text-white/90 transition-colors"
-                >
-                    <Plus size={12} />
-                    {isEnd ? "Add step" : "Add step"}
-                </button>
+                <Tooltip content={isEnd ? "Add a step at the end" : "Add a step here"}>
+                    <button
+                        onClick={() => onSelectInsertPosition(index)}
+                        className="relative inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-[#1a1718] px-3 py-1 text-xs font-medium text-white/60 hover:border-[#2721E8]/60 hover:bg-[#2721E8]/10 hover:text-white/90 transition-colors"
+                    >
+                        <Plus size={12} />
+                        Add step
+                    </button>
+                </Tooltip>
             </div>
         );
     };
