@@ -73,8 +73,14 @@ objc2-app-kit = { version = "0.3", features = [
 objc2-quartz-core = { version = "0.3", features = ["CALayer"] }
 
 [target.'cfg(target_os = "linux")'.dependencies]
-atspi = "0.21"
-zbus = { version = "4", default-features = false, features = ["tokio"] }
+# atspi 0.29 is the first release where `AccessibilityConnection` exposes
+# `root_accessible_on_registry` and `object_as_accessible` (added together with
+# the P2P work), which the focused-field walker in `accessibility.rs` relies on.
+# Default features pull in `connection`, `proxies`, `p2p`, `wrappers`; we add
+# `tokio` so the embedded current-thread runtime in `get_focused_field_value`
+# can drive zbus. zbus itself is pulled in transitively by atspi (no direct use
+# in our code) so we don't list it separately.
+atspi = { version = "0.29", features = ["tokio"] }
 x11 = { version = "2.21", features = ["xlib"] }
 
 # Wayland support

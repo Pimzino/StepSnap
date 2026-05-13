@@ -531,10 +531,9 @@ pub fn get_element_at_point(x: f64, y: f64) -> Option<ElementInfo> {
 /// - Password fields surface as `password text` role; we detect and redact.
 #[cfg(target_os = "linux")]
 pub fn get_focused_field_value() -> Option<FocusedFieldValue> {
-    use atspi::AccessibilityConnection;
-    use atspi_common::State;
-    use atspi_proxies::accessible::AccessibleProxy;
-    use atspi_proxies::text::TextProxy;
+    use atspi::proxy::accessible::AccessibleProxy;
+    use atspi::proxy::text::TextProxy;
+    use atspi::{AccessibilityConnection, ObjectRefOwned, State};
 
     /// Walk a bounded subtree of the accessibility tree looking for the
     /// element whose state set contains FOCUSED. Returns the first match.
@@ -561,7 +560,10 @@ pub fn get_focused_field_value() -> Option<FocusedFieldValue> {
             if i as u32 >= max_children {
                 break;
             }
-            let child = match conn.object_as_accessible(&child_ref.into()).await {
+            let child = match conn
+                .object_as_accessible(&ObjectRefOwned::new(child_ref))
+                .await
+            {
                 Ok(p) => p,
                 Err(_) => continue,
             };
