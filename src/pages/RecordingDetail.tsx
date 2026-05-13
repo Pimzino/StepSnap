@@ -8,7 +8,6 @@ import {
     AlertTriangle,
     ArrowLeft,
     Check,
-    MapPin,
     Pencil,
     Play,
     Save,
@@ -518,15 +517,13 @@ export default function RecordingDetail() {
     };
 
     const handleSelectInsertPosition = (index: number) => {
+        if (isSelectingPosition && insertPosition === index) {
+            setInsertPosition(null);
+            setIsSelectingPosition(false);
+            return;
+        }
         setInsertPosition(index);
         setIsSelectingPosition(true);
-    };
-
-    const togglePositionSelection = () => {
-        setIsSelectingPosition((previousValue) => !previousValue);
-        if (isSelectingPosition) {
-            setInsertPosition(null);
-        }
     };
 
     const startRecordingMore = async () => {
@@ -971,23 +968,6 @@ export default function RecordingDetail() {
                                             </button>
                                         </Tooltip>
                                     </>
-                                )}
-                                {!isRecording && !hasUnsavedChanges && (
-                                    <Tooltip content={isSelectingPosition ? "Cancel position selection" : "Select where to insert new steps"}>
-                                        <button
-                                            onClick={togglePositionSelection}
-                                            className={`flex items-center gap-2 rounded-md px-3 py-2 transition-colors ${
-                                                isSelectingPosition
-                                                    ? "bg-white/10 hover:bg-white/15"
-                                                    : "bg-[#2721E8] hover:bg-[#4a45f5]"
-                                            }`}
-                                        >
-                                            <MapPin size={18} />
-                                            <span className="text-sm font-medium">
-                                                {isSelectingPosition ? "Cancel" : "Select Position"}
-                                            </span>
-                                        </button>
-                                    </Tooltip>
                                 )}
                                 {insertPosition !== null && !isRecording && (
                                     <Tooltip content="Start recording more steps">

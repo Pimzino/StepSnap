@@ -40,25 +40,21 @@ export default function StepsTab({
     );
 
     const renderInsertSlot = (index: number, isEnd: boolean = false) => {
-        if (isSelectingPosition) {
-            const isActive = insertPosition === index;
+        const isActive = isSelectingPosition && insertPosition === index;
+
+        if (isActive) {
             return (
                 <button
                     onClick={() => onSelectInsertPosition(index)}
-                    className={`group relative flex w-full items-center justify-center py-2 transition-colors ${
-                        isActive ? "text-green-400" : "text-white/35 hover:text-white/70"
-                    }`}
+                    title="Click again to cancel"
+                    className="group relative flex w-full items-center justify-center py-2 text-green-400 transition-colors"
                 >
-                    <span className={`h-px flex-1 ${isActive ? "bg-green-400" : "bg-white/10 group-hover:bg-white/20"}`} />
-                    <span className={`mx-3 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${
-                        isActive
-                            ? "border-green-500 bg-green-500/15 text-green-400"
-                            : "border-white/15 bg-white/5 group-hover:border-white/25 group-hover:bg-white/10"
-                    }`}>
+                    <span className="h-px flex-1 bg-green-400" />
+                    <span className="mx-3 inline-flex items-center gap-1.5 rounded-full border border-green-500 bg-green-500/15 px-3 py-1 text-xs font-medium text-green-400">
                         <MapPin size={12} />
-                        {isActive ? "Insert Here" : isEnd ? "Insert at End" : "Insert here"}
+                        Insert here
                     </span>
-                    <span className={`h-px flex-1 ${isActive ? "bg-green-400" : "bg-white/10 group-hover:bg-white/20"}`} />
+                    <span className="h-px flex-1 bg-green-400" />
                 </button>
             );
         }
@@ -71,7 +67,7 @@ export default function StepsTab({
                     className="relative inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-[#1a1718] px-3 py-1 text-xs font-medium text-white/60 hover:border-[#2721E8]/60 hover:bg-[#2721E8]/10 hover:text-white/90 transition-colors"
                 >
                     <Plus size={12} />
-                    Add step
+                    {isEnd ? "Add step" : "Add step"}
                 </button>
             </div>
         );
