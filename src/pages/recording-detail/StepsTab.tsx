@@ -48,7 +48,7 @@ export default function StepsTab({
                 <Tooltip content="Click again to cancel" className="flex w-full">
                     <button
                         onClick={() => onSelectInsertPosition(index)}
-                        className="group relative flex w-full items-center justify-center py-2 text-green-400 transition-colors"
+                        className="group relative flex w-full items-center justify-center py-5 text-green-400 transition-colors"
                     >
                         <span className="h-px flex-1 bg-green-400" />
                         <span className="mx-3 inline-flex items-center gap-1.5 rounded-full border border-green-500 bg-green-500/15 px-3 py-1 text-xs font-medium text-green-400">
@@ -62,7 +62,7 @@ export default function StepsTab({
         }
 
         return (
-            <div className="relative flex w-full items-center justify-center py-1">
+            <div className="relative flex w-full items-center justify-center py-4">
                 <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/8" />
                 <Tooltip content={isEnd ? "Add a step at the end" : "Add a step here"}>
                     <button
